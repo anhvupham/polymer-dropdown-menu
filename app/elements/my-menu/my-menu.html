@@ -1,0 +1,188 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/social-icons.html">
+<dom-module id="my-menu">
+    <style>
+    :host {
+        display: block;
+    }
+    
+    paper-menu {
+        padding: 0;
+    }
+    
+    paper-menu a {
+        text-decoration: none;
+        color: var(--menu-link-color);
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -ms-flex-direction: row;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        font-family: 'Roboto', 'Noto', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 24px;
+        min-height: 48px;
+        padding: 0px 16px;
+    }
+    
+    iron-collapse paper-menu a {
+        padding: 0px 36px;
+    }
+    
+    paper-menu iron-icon {
+        margin-right: 33px;
+        opacity: 0.54;
+    }
+    
+    .mainmenu:hover {
+        cursor: pointer;
+    }
+    
+    .mainmenu .title {
+        /*font-family: sans-serif;*/
+        
+        padding-left: 10px;
+        font-family: 'Roboto', 'Noto', sans-serif;
+        /*font-size: 13px;*/
+        
+        font-weight: bold;
+        /*white-space: nowrap;*/
+        
+        font-size: 13px;
+    }
+    
+    .mainmenu hr {
+        color: #ccc;
+    }
+    </style>
+    <template>
+        <br/>
+        <template is="dom-repeat" items="{{menus}}">
+            <div hidden$="{{!item.link}}">
+                <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}">
+                    <a data-route="{{item.tag}}" href="{{item.link}}">
+                        <div hidden$="{{!item.icon}}">
+                            <iron-icon icon="{{item.icon}}"></iron-icon>
+                        </div>
+                        <span>{{item.title}}</span>
+                    </a>
+                </paper-menu>
+            </div>
+            <div hidden$="{{item.link}}">
+                <paper-item class="mainmenu" style$="{{returnColor(item.color, item.open)}}" on-click="open">
+                    <div hidden$="{{!item.icon}}">
+                        <iron-icon icon="{{item.icon}}"></iron-icon>
+                    </div>
+                    <div class="title">{{item.title}}</div>
+                </paper-item>
+            </div>
+            <iron-collapse id="{{item.id}}" opened="{{returnState(item.open)}}">
+                <template is="dom-repeat" items="{{item.items}}">
+                    <template is="dom-repeat" items="{{item.children}}">
+                        <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}">
+                            <a data-route="{{item.tag}}" href="{{item.link}}">
+                                <span>{{item.title}}</span>
+                            </a>
+                        </paper-menu>
+                    </template>
+                </template>
+            </iron-collapse>
+            <div hidden$="{{!seperator}}" <hr/>
+            </div>
+        </template>
+        <iron-ajax auto id="ajax" method="GET" handle-as="json" on-response="handleResponse"></iron-ajax>
+    </template>
+</dom-module>
+<script>
+(function() {
+    Polymer({
+        is: 'my-menu',
+        properties: {
+            menus: {
+                type: Array,
+                notify: true
+            },
+            url: {
+                type: String
+            },
+            collapsible: {
+                type: Boolean
+            },
+            oneonly: {
+                type: Boolean
+            },
+            seperator: {
+                type: Boolean
+            }
+        },
+        open: function(e) {
+            var model = e.model,
+                item = model.get('item'),
+                state = item.open;
+
+            if (this.oneonly) {
+                for (var i = 0; i < this.menus.length; i++) {
+                    this.set('menus.' + i + '.open', false);
+                }
+            }
+
+            model.set('item.open', !state);
+        },
+        returnColor: function(color, open) {
+            if (open) return 'color:' + color;
+        },
+        returnState: function(state) {
+            if (this.collapsible) return state;
+            else return true;
+        },
+        handleResponse: function(request) {
+            var resp = request.detail.response;
+            if (resp) {
+                this.menus = this.parseNavigation(resp.results);
+            }
+        },
+        ready: function() {
+            this.$.ajax.url = this.url;
+        },
+        parseNavigation: function(nav) {
+            var local = [],
+                limb;
+            for (var i = 0; i < nav.length; i++) {
+                limb = nav[i];
+                local.push({
+                    'title': limb.title,
+                    'class': limb.title.toLowerCase().replace(/ /g, ''),
+                    'items': limb.branches || item.menus,
+                    'id': limb.title.toLowerCase().replace(/ /g, ''),
+                    'icon': limb.icon,
+                    'color': limb.color,
+                    'open': false
+                });
+            }
+            return local;
+        }
+    });
+})();
+</script>
