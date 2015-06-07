@@ -56,11 +56,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         opacity: 0.54;
     }
     
-    .mainmenu:hover {
+    paper-item:hover {
         cursor: pointer;
     }
     
-    .mainmenu .title {
+    .seperator {
+        border-top: 1px solid #ccc;
+    }
+    
+    paper-item .title {
         /*font-family: sans-serif;*/
         
         padding-left: 10px;
@@ -72,16 +76,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         
         font-size: 13px;
     }
-    
-    .mainmenu hr {
-        color: #ccc;
-    }
     </style>
     <template>
-        <br/>
         <template is="dom-repeat" items="{{menus}}">
             <div hidden$="{{!item.link}}">
-                <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}">
+                <paper-menu class$="{{returnSeperator()}}" attr-for-selected="data-route" selected="{{route}}">
                     <a data-route="{{item.tag}}" href="{{item.link}}">
                         <div hidden$="{{!item.icon}}">
                             <iron-icon icon="{{item.icon}}"></iron-icon>
@@ -91,7 +90,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </paper-menu>
             </div>
             <div hidden$="{{item.link}}">
-                <paper-item class="mainmenu" style$="{{returnColor(item.color, item.open)}}" on-click="open">
+                <paper-item class$="{{returnSeperator()}}" style$="{{returnColor(item.color, item.open)}}" on-click="open">
                     <div hidden$="{{!item.icon}}">
                         <iron-icon icon="{{item.icon}}"></iron-icon>
                     </div>
@@ -109,8 +108,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </template>
                 </template>
             </iron-collapse>
-            <div hidden$="{{!seperator}}" <hr/>
-            </div>
         </template>
         <iron-ajax auto id="ajax" method="GET" handle-as="json" on-response="handleResponse"></iron-ajax>
     </template>
@@ -130,7 +127,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             collapsible: {
                 type: Boolean
             },
-            oneonly: {
+            toggle: {
                 type: Boolean
             },
             seperator: {
@@ -138,17 +135,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
         },
         open: function(e) {
+            console.log(this.menus)
             var model = e.model,
                 item = model.get('item'),
                 state = item.open;
 
-            if (this.oneonly) {
+            if (this.toggle) {
                 for (var i = 0; i < this.menus.length; i++) {
                     this.set('menus.' + i + '.open', false);
                 }
             }
 
             model.set('item.open', !state);
+        },
+        returnSeperator: function() {
+            if(this.seperator) return 'seperator';
         },
         returnColor: function(color, open) {
             if (open) return 'color:' + color;
@@ -164,7 +165,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
         },
         ready: function() {
-            this.$.ajax.url = this.url;
+            this.$.ajax.url = this.url;            
         },
         parseNavigation: function(nav) {
             var local = [],
@@ -174,7 +175,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 local.push({
                     'title': limb.title,
                     'class': limb.title.toLowerCase().replace(/ /g, ''),
-                    'items': limb.branches || item.menus,
+                    'items': limb.branches || limb.items,
                     'id': limb.title.toLowerCase().replace(/ /g, ''),
                     'icon': limb.icon,
                     'color': limb.color,

@@ -48,8 +48,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }, {
         title: "Open 1 at a time",
         // icon: "social:group-add",
-        link: "/one",
-        tag: "one"
+        link: "/toggle",
+        tag: "toggle"
     }, {
         title: "Icon and Color",
         // icon: "social:group-add",
@@ -58,8 +58,150 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }, {
         title: "Two level",
         // icon: "social:group-add",
-        link: "/icon",
-        tag: "icon"
-    }]
+        link: "/level",
+        tag: "level"
+    }];
+
+    app.demo1 = [{
+        title: "Licensor Management",
+        icon: "social:group-add",
+        color: "#2e7d32",
+        branches: [{
+            title: "Licensor Manage",
+            link: "/login",
+            tag: "login",
+            children: [{
+                title: "Add Licensor",
+                link: "/login",
+                tag: "login"
+            }, {
+                title: "Licensors",
+                link: "/login",
+                tag: "login"
+            }]
+        }]
+    }, {
+        title: "Admin Permission",
+        icon: "settings",
+        color: "#ff4080",
+        branches: [{
+            title: "Admin Console",
+            link: "/login",
+            tag: "login",
+            children: [{
+                title: "Settings",
+                link: "/login",
+                tag: "login"
+            }, {
+                title: "Billings",
+                link: "/login",
+                tag: "login"
+            }]
+        }, {
+            title: "User Management",
+            link: "/login",
+            tag: "login",
+            children: [{
+                title: "Add User",
+                link: "/login",
+                tag: "login"
+            }, {
+                title: "Users",
+                link: "/login",
+                tag: "login"
+            }, {
+                title: "Assign Permission",
+                link: "/login",
+                tag: "login"
+            }, {
+                title: "Permissions",
+                link: "/login",
+                tag: "login"
+            }]
+        }]
+    }, {
+        title: "Files Management",
+        icon: "editor:insert-drive-file",
+        color: "#ff4080",
+        branches: [{
+            title: "My Folders",
+            link: "/login",
+            tag: "login",
+            children: [{
+                title: "All",
+                link: "/login",
+                tag: "login"
+            }, {
+                title: "Recent",
+                link: "/login",
+                tag: "login"
+            }, {
+                title: "Trash",
+                link: "/login",
+                tag: "login"
+            }]
+        }, {
+            title: "Collaboration",
+            link: "/login",
+            tag: "login",
+            children: [{
+                title: "Shared Folders",
+                link: "/login",
+                tag: "login"
+            }]
+        }, {
+            title: "Client Management",
+            link: "/login",
+            tag: "login",
+            children: [{
+                title: "Client Folders",
+                link: "/login",
+                tag: "login"
+            }, {
+                title: "Add Client",
+                link: "/login",
+                tag: "login"
+            }, {
+                title: "Clients",
+                link: "/login",
+                tag: "login"
+            }, {
+                title: "Client Permissions",
+                link: "/login",
+                tag: "login"
+            }]
+        }]
+    }, {
+        title: "Services & Products",
+        icon: "icons:shop",
+        color: "#2e7d32",
+        branches: [{
+            title: "Service Manage",
+            link: "/login",
+            tag: "login",
+            children: [{
+                title: "Add Service",
+                link: "/login",
+                tag: "login"
+            }, {
+                title: "Services",
+                link: "/login",
+                tag: "login"
+            }]
+        }, {
+            title: "Product Manage",
+            link: "/login",
+            tag: "login",
+            children: [{
+                title: "Add Product",
+                link: "/login",
+                tag: "login"
+            }, {
+                title: "Products",
+                link: "/login",
+                tag: "login"
+            }]
+        }]
+    }];
 
 })(document);
