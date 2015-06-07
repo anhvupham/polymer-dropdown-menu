@@ -66,7 +66,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         title: "Licensor Management",
         icon: "social:group-add",
         color: "#2e7d32",
-        branches: [{
+        items: [{
             title: "Licensor Manage",
             link: "/login",
             tag: "login",
@@ -84,7 +84,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         title: "Admin Permission",
         icon: "settings",
         color: "#ff4080",
-        branches: [{
+        items: [{
             title: "Admin Console",
             link: "/login",
             tag: "login",
@@ -123,7 +123,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         title: "Files Management",
         icon: "editor:insert-drive-file",
         color: "#ff4080",
-        branches: [{
+        items: [{
             title: "My Folders",
             link: "/login",
             tag: "login",
@@ -175,7 +175,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         title: "Services & Products",
         icon: "icons:shop",
         color: "#2e7d32",
-        branches: [{
+        items: [{
             title: "Service Manage",
             link: "/login",
             tag: "login",
