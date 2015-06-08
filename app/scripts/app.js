@@ -7,7 +7,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-(function (document) {
+(function(document) {
     'use strict';
 
     // Grab a reference to our auto-binding template
@@ -15,25 +15,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
     var app = document.querySelector('#app');
 
-    app.displayInstalledToast = function () {
+    app.displayInstalledToast = function() {
         document.querySelector('#caching-complete').show();
     };
 
     // Listen for template bound event to know when bindings
     // have resolved and content has been stamped to the page
-    app.addEventListener('dom-change', function () {
+    app.addEventListener('dom-change', function() {
         console.log('Our app is ready to rock!');
     });
 
     // See https://github.com/Polymer/polymer/issues/1381
-    window.addEventListener('WebComponentsReady', function () {
+    window.addEventListener('WebComponentsReady', function() {
         // Ensure the drawer is hidden on desktop/tablet
         var drawerPanel = document.querySelector('#paperDrawerPanel');
         drawerPanel.forceNarrow = true;
     });
 
     // Close drawer after menu item is selected if drawerPanel is narrow
-    app.onMenuSelect = function () {
+    app.onMenuSelect = function() {
         var drawerPanel = document.querySelector('#paperDrawerPanel');
         if (drawerPanel.narrow) {
             drawerPanel.closeDrawer();
@@ -46,7 +46,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         link: "/collapsible",
         tag: "collapsible"
     }, {
-        title: "Open 1 at a time",
+        title: "Toggle",
         // icon: "social:group-add",
         link: "/toggle",
         tag: "toggle"
@@ -56,150 +56,141 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         link: "/icon",
         tag: "icon"
     }, {
-        title: "Two level",
+        title: "Multiple levels",
         // icon: "social:group-add",
         link: "/level",
         tag: "level"
     }];
 
+    //demo json
     app.demo1 = [{
-        title: "Licensor Management",
-        icon: "social:group-add",
-        color: "#2e7d32",
+        title: "Department",
         items: [{
-            title: "Licensor Manage",
-            link: "/login",
-            tag: "login",
-            children: [{
-                title: "Add Licensor",
-                link: "/login",
-                tag: "login"
-            }, {
-                title: "Licensors",
-                link: "/login",
-                tag: "login"
-            }]
+            title: "Add",
+            link: location.hash,
+            tag: "#"
+        }, {
+            title: "List",
+            link: location.hash,
+            tag: "#"
         }]
     }, {
-        title: "Admin Permission",
-        icon: "settings",
-        color: "#ff4080",
+        title: "Employee",
         items: [{
-            title: "Admin Console",
-            link: "/login",
-            tag: "login",
-            children: [{
-                title: "Settings",
-                link: "/login",
-                tag: "login"
-            }, {
-                title: "Billings",
-                link: "/login",
-                tag: "login"
-            }]
+            title: "Add",
+            link: location.hash,
+            tag: "#"
         }, {
-            title: "User Management",
-            link: "/login",
-            tag: "login",
-            children: [{
-                title: "Add User",
-                link: "/login",
-                tag: "login"
-            }, {
-                title: "Users",
-                link: "/login",
-                tag: "login"
-            }, {
-                title: "Assign Permission",
-                link: "/login",
-                tag: "login"
-            }, {
-                title: "Permissions",
-                link: "/login",
-                tag: "login"
-            }]
+            title: "List",
+            link: location.hash,
+            tag: "#"
+        }]
+    }];
+
+    app.demo2 = [{
+        title: "Department",
+        icon: "group-work",
+        color: "#3F51B5",
+        items: [{
+            title: "Add",
+            link: location.hash,
+            tag: "#"
+        }, {
+            title: "List",
+            link: location.hash,
+            tag: "#"
         }]
     }, {
-        title: "Files Management",
-        icon: "editor:insert-drive-file",
-        color: "#ff4080",
+        title: "Employee",
+        icon: "account-circle",
+        color: "#FF4080",
         items: [{
-            title: "My Folders",
-            link: "/login",
-            tag: "login",
-            children: [{
-                title: "All",
-                link: "/login",
-                tag: "login"
+            title: "Add",
+            link: location.hash,
+            tag: "#"
+        }, {
+            title: "List",
+            link: location.hash,
+            tag: "#"
+        }]
+    }];
+
+    app.demo3 = [{
+        title: "Company",
+        icon: "group-work",
+        color: "#3F51B5",
+        items: [{
+            title: "New",
+            link: location.hash,
+            tag: "#",
+        }, {
+            title: "List",
+            link: location.hash,
+            tag: "#",
+        }, {
+            title: "Department",
+            icon: "account-circle",
+            color: "#FF4080",
+            items: [{
+                title: "New",
+                link: location.hash,
+                tag: "#",
             }, {
-                title: "Recent",
-                link: "/login",
-                tag: "login"
-            }, {
-                title: "Trash",
-                link: "/login",
-                tag: "login"
+                title: "List",
+                link: location.hash,
+                tag: "#",
             }]
         }, {
-            title: "Collaboration",
-            link: "/login",
-            tag: "login",
-            children: [{
-                title: "Shared Folders",
-                link: "/login",
-                tag: "login"
-            }]
-        }, {
-            title: "Client Management",
-            link: "/login",
-            tag: "login",
-            children: [{
-                title: "Client Folders",
-                link: "/login",
-                tag: "login"
+            title: "Employee",
+            icon: "account-circle",
+            color: "#FF4080",
+            items: [{
+                title: "Add",
+                link: location.hash,
+                tag: "#"
             }, {
-                title: "Add Client",
-                link: "/login",
-                tag: "login"
-            }, {
-                title: "Clients",
-                link: "/login",
-                tag: "login"
-            }, {
-                title: "Client Permissions",
-                link: "/login",
-                tag: "login"
+                title: "List",
+                link: location.hash,
+                tag: "#"
             }]
         }]
-    }, {
-        title: "Services & Products",
-        icon: "icons:shop",
-        color: "#2e7d32",
+    },{
+        title: "Company",
+        icon: "group-work",
+        color: "#3F51B5",
         items: [{
-            title: "Service Manage",
-            link: "/login",
-            tag: "login",
-            children: [{
-                title: "Add Service",
-                link: "/login",
-                tag: "login"
+            title: "New",
+            link: location.hash,
+            tag: "#",
+        }, {
+            title: "List",
+            link: location.hash,
+            tag: "#",
+        }, {
+            title: "Department",
+            icon: "account-circle",
+            color: "#FF4080",
+            items: [{
+                title: "New",
+                link: location.hash,
+                tag: "#",
             }, {
-                title: "Services",
-                link: "/login",
-                tag: "login"
+                title: "List",
+                link: location.hash,
+                tag: "#",
             }]
         }, {
-            title: "Product Manage",
-            link: "/login",
-            tag: "login",
-            children: [{
-                title: "Add Product",
-                link: "/login",
-                tag: "login"
+            title: "Employee",
+            icon: "account-circle",
+            color: "#FF4080",
+            items: [{
+                title: "Add",
+                link: location.hash,
+                tag: "#"
             }, {
-                title: "Products",
-                link: "/login",
-                tag: "login"
+                title: "List",
+                link: location.hash,
+                tag: "#"
             }]
         }]
     }];

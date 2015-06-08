@@ -99,17 +99,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
             <iron-collapse id="{{item.id}}" opened="{{returnState(item.open)}}">
                 <template is="dom-repeat" items="{{item.items}}">
-                    <template is="dom-repeat" items="{{item.children}}">
-                        <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}">
-                            <a data-route="{{item.tag}}" href="{{item.link}}">
-                                <span>{{item.title}}</span>
-                            </a>
-                        </paper-menu>
-                    </template>
+                    <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}">
+                        <a data-route="{{item.tag}}" href="{{item.link}}">
+                            <span>{{item.title}}</span>
+                        </a>
+                    </paper-menu>
                 </template>
             </iron-collapse>
         </template>
-        <iron-ajax auto id="ajax" method="GET" handle-as="json" on-response="handleResponse"></iron-ajax>
+        <!-- <iron-ajax auto id="ajax" method="GET" handle-as="json" on-response="handleResponse"></iron-ajax> -->
     </template>
 </dom-module>
 <script>
@@ -135,7 +133,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
         },
         open: function(e) {
-            console.log(this.menus)
             var model = e.model,
                 item = model.get('item'),
                 state = item.open;
@@ -149,7 +146,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             model.set('item.open', !state);
         },
         returnSeperator: function() {
-            if(this.seperator) return 'seperator';
+            // console.log(this.seperator)
+            if (this.seperator) return 'seperator';
         },
         returnColor: function(color, open) {
             if (open) return 'color:' + color;
@@ -158,32 +156,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             if (this.collapsible) return state;
             else return true;
         },
-        handleResponse: function(request) {
-            var resp = request.detail.response;
-            if (resp) {
-                this.menus = this.parseNavigation(resp.results);
-            }
-        },
+        // handleResponse: function(request) {
+        //     var resp = request.detail.response;
+        //     if (resp) {
+        //         this.menus = this.parseNavigation(resp.results);
+        //     }
+        // },
         ready: function() {
-            this.$.ajax.url = this.url;            
+                // this.$.ajax.url = this.url;            
         },
-        parseNavigation: function(nav) {
-            var local = [],
-                limb;
-            for (var i = 0; i < nav.length; i++) {
-                limb = nav[i];
-                local.push({
-                    'title': limb.title,
-                    'class': limb.title.toLowerCase().replace(/ /g, ''),
-                    'items': limb.branches || limb.items,
-                    'id': limb.title.toLowerCase().replace(/ /g, ''),
-                    'icon': limb.icon,
-                    'color': limb.color,
-                    'open': false
-                });
-            }
-            return local;
-        }
+        // parseNavigation: function(nav) {
+        //     var local = [],
+        //         limb;
+        //     for (var i = 0; i < nav.length; i++) {
+        //         limb = nav[i];
+        //         local.push({
+        //             'title': limb.title,
+        //             'class': limb.title.toLowerCase().replace(/ /g, ''),
+        //             'items': limb.branches || limb.items,
+        //             'id': limb.title.toLowerCase().replace(/ /g, ''),
+        //             'icon': limb.icon,
+        //             'color': limb.color,
+        //             'open': false
+        //         });
+        //     }
+        //     return local;
+        // }
     });
 })();
 </script>
