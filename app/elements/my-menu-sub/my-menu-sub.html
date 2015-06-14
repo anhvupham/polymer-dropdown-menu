@@ -90,7 +90,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-menu>
         </div>
         <div hidden$="{{item.link}}">
-            <paper-item class$="{{returnSeperator()}}" style$="{{returnColor(item.color)}}" on-click="open">
+            <paper-item class$="{{seperatorClass}}" style$="{{returnColor(item.color)}}" on-click="open">
                 <div hidden$="{{!item.icon}}">
                     <iron-icon icon="{{item.icon}}"></iron-icon>
                 </div>
@@ -114,47 +114,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             },
             seperator: {
                 type: Boolean,
-
+                observer: 'changeSeperator'
             },
             item: {
                 type: Object,
                 notify: true
             },
-            color: {
-                type: String
+            
+            seperatorClass: {
+                type: String,
+                notify: true
+            },
+            
+        },
+        
+        changeSeperator: function(newvalue, oldvalue) {
+            if (newvalue) {
+                this.seperatorClass = 'seperator';
             }
         },
         open: function(e) {
-            // console.log('this.collapsible', this.collapsible);
-            if (this.collapsible) this.$.collapse.toggle();
-            // var model = e.model,
-            //     item = model.get('item'),
-            //     state = item.open;
-
-            // // if (this.toggle) {
-            // //     for (var i = 0; i < this.menus.length; i++) {
-            // //         this.set('menus.' + i + '.open', false);
-            // //     }
-            // // }
-
-            // model.set('item.open', !state);
+            if (this.collapsible) this.$.collapse.toggle();            
         },
         returnSeperator: function() {
-            
             if (this.seperator) return 'seperator';
         },
         returnColor: function(color) {
-            console.log('opened',this.$.collapse.opened)
-            console.log('color',this.item.color)
-            if (this.$.collapse.opened) return 'color:' + color;
+
+            console.log('color', this.item.color)
+            if (this.item.color)
+                return 'color:' + this.item.color;
         },
-        // returnState: function(state) {
-        //     if (this.collapsible) return state;
-        //     else return true;
-        // },
+
 
         ready: function() {
-// console.log('this.seperator',this.seperator)
+
         },
 
     });
