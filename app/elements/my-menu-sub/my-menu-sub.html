@@ -90,7 +90,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-menu>
         </div>
         <div hidden$="{{item.link}}">
-            <paper-item class$="{{seperatorClass}}" style$="{{returnColor(item.color)}}" on-click="open">
+            <paper-item class$="{{seperatorClass}}" style$="{{returnColor()}}" on-click="open">
                 <div hidden$="{{!item.icon}}">
                     <iron-icon icon="{{item.icon}}"></iron-icon>
                 </div>
@@ -120,30 +120,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 type: Object,
                 notify: true
             },
-            
+
             seperatorClass: {
                 type: String,
                 notify: true
             },
-            
+
         },
-        
+
         changeSeperator: function(newvalue, oldvalue) {
             if (newvalue) {
                 this.seperatorClass = 'seperator';
             }
         },
         open: function(e) {
-            if (this.collapsible) this.$.collapse.toggle();            
+            if (this.collapsible) this.$.collapse.toggle();
         },
         returnSeperator: function() {
             if (this.seperator) return 'seperator';
+            else return '';
         },
-        returnColor: function(color) {
+        returnColor: function() {
+            if (this.item)
+                if (this.item.color)
+                    return 'color:' + this.item.color;
 
-            console.log('color', this.item.color)
-            if (this.item.color)
-                return 'color:' + this.item.color;
+            return '';
         },
 
 

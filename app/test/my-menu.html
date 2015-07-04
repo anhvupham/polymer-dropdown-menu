@@ -1,0 +1,61 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!doctype html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>my-menu</title>
+    <script src="../../bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <link rel="import" href="../../bower_components/polymer/polymer.html">
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
+    <script src="../../bower_components/test-fixture/test-fixture-mocha.js"></script>
+    <link rel="import" href="../../bower_components/test-fixture/test-fixture.html">
+    <!-- Step 1: import the element to test -->
+    <link rel="import" href="../elements/my-menu/my-menu.html">
+</head>
+
+<body>
+    <test-fixture id="basic">
+        <template>
+            <my-menu></my-menu>
+        </template>
+    </test-fixture>
+    <script>
+    suite('my-menu tests', function() {
+        var menu;
+
+        setup(function() {
+            menu = fixture('basic');
+        });
+
+        test('return Seperator function should return correct string as "seperator"', function(done) {
+            menu.seperator = true;
+            assert.equal(menu.returnSeperator(), 'seperator');
+            done();
+        });
+
+        test('return Color function should return correct format as "color:XXXXX"', function(done) {
+            var color = 'red',
+                open = true;
+
+            assert.match(menu.returnColor(color, open), /color/, 'regexp matches');
+            done();
+        });
+
+        test('return State function should return true if "collapsible" variable was not sent', function(done) {
+            assert.equal(menu.returnState(), true);
+            done();
+        });
+    });
+    </script>
+</body>
+
+</html>
